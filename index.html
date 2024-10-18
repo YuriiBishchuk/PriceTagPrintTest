@@ -1,0 +1,419 @@
+<html lang="en" style="padding: 0; margin: 0;">
+
+<head>
+    <meta charset="utf-8">
+    <script src="/priceTagsRendererApi/scripts/bwip.js"></script>
+    <script src="/priceTagsRendererApi/scripts/fonts.js"></script>
+    <script>
+        window.CurrentPageSize = () => {
+            return {
+                orientation: 0,
+                width: 80.00,
+                height: 39.5
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="/priceTagsRendererApi/styles/core.css">
+    <style>
+        /* ReSharper disable once Html.AttributeNotResolved */
+        [page] {
+            width: 80.00mm;
+            height: 39.00mm;
+        }
+
+        @media print {
+            [page] {
+                padding-left: 1.2mm;
+            }
+
+            [page] {
+                width: 80.40mm;
+                height: 39.00mm
+            }
+
+            @page {
+                size: 80.00mm 39.50mm;
+            }
+        }
+
+        button[printButton] {
+  background-color: #e63946; /* М'який червоний колір фону */
+  color: #ffffff; /* Білий текст */
+  font-size: 18px; /* Розмір тексту трохи більший за стандартний */
+  padding: 12px 24px; /* Відступи, щоб кнопка виглядала більшою */
+  border: none; /* Без рамки */
+  border-radius: 8px; /* Закруглені кути для сучасного вигляду */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Легка тінь для об’єму */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Анімація для плавної зміни кольору і руху */
+  cursor: pointer; /* Вказівник-рука при наведенні */
+  margin: 1rem;
+}
+
+button[printButton]:hover {
+  background-color: #d62828; /* Трохи темніший червоний при наведенні */
+  transform: translateY(-2px); /* Легке підняття кнопки при наведенні */
+}
+
+button[printButton]:active {
+  background-color: #b71c1c; /* Ще темніший червоний при кліку */
+  transform: translateY(0); /* Кнопка повертається на місце при натисканні */
+}
+
+
+    </style>
+    <script src="/priceTagsRendererApi/scripts/execution-manager.js"></script>
+    <script src="/priceTagsRendererApi/scripts/core.js"></script>
+</head>
+
+<body style="padding: 0; margin: 0;">
+    <div id="my_mm" style="display: none; height: 100mm;"></div>
+    <div id="my_pt" style="display: none; height: 100pt;"></div>
+    <script type="text/javascript" language="javascript">
+        pxTomm(10);
+        pxTopt(10);
+    </script>
+    <style>
+        [price-tag="277"] *[resource="f82ad730-82e8-4f2a-8543-4a3e4d4e9876"] {
+            content: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyNi4wLjMsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4wIiBpZD0i0KHQu9C+0LlfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSIyMjEuMXB4IiBoZWlnaHQ9IjE0LjJweCIgdmlld0JveD0iMCAwIDIyMS4xIDE0LjIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDIyMS4xIDE0LjI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+DQoJLnN0MHtlbmFibGUtYmFja2dyb3VuZDpuZXcgICAgO30NCgkuc3Qxe2ZpbGw6I0ZGRkZGRjt9DQo8L3N0eWxlPg0KPGcgaWQ9IlRleHQiPg0KCTxwYXRoIGQ9Ik0wLDBoMjIxLjFsMCwwdjcuMWMwLDMuOS0zLjIsNy4xLTcuMSw3LjFsMCwwSDcuMUMzLjIsMTQuMiwwLDExLDAsNy4xYzAsMCwwLDAsMCwwVjBMMCwweiIvPg0KCTxnIGNsYXNzPSJzdDAiPg0KCQk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNOS45LDkuNHYyLjRIOC43di0xLjFoLTRWNS40SDZ2My45aDEuOVY1LjRoMS40djMuOUg5Ljl6Ii8+DQoJPC9nPg0KCTxnIGNsYXNzPSJzdDAiPg0KCQk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTUuNCw4LjRoLTMuNWMwLjEsMC42LDAuNiwxLDEuMywxYzAuNSwwLDAuOS0wLjIsMS4yLTAuNWwwLjcsMC45Yy0wLjQsMC41LTEuMSwwLjgtMS45LDAuOA0KCQkJYy0xLjYsMC0yLjctMS4xLTIuNy0yLjdjMC0xLjUsMS4xLTIuNywyLjUtMi43YzEuNCwwLDIuNCwxLDIuNCwyLjdDMTUuNCw4LjEsMTUuNCw4LjMsMTUuNCw4LjR6IE0xMS45LDcuNmgyLjMNCgkJCWMtMC4xLTAuNy0wLjUtMS4xLTEuMi0xLjFDMTIuNCw2LjUsMTIsNi45LDExLjksNy42eiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTE2LjUsNS40aDEuNHYzLjFsMi4zLTMuMWgxLjJ2NS4yaC0xLjRWNy41bC0yLjMsMy4xaC0xLjNWNS40eiBNMTcuNCwzLjRoMC45YzAsMC40LDAuMiwwLjcsMC42LDAuNw0KCQkJYzAuNCwwLDAuNy0wLjMsMC43LTAuN2gwLjljMCwxLTAuNSwxLjUtMS42LDEuNVMxNy40LDQuNCwxNy40LDMuNHoiLz4NCgk8L2c+DQoJPGcgY2xhc3M9InN0MCI+DQoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0yOS4xLDYuN2gtMS42djMuOWgtMS40VjYuN2gtMS42VjUuNGg0LjVWNi43eiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTI5LjYsOGMwLTEuNiwxLjEtMi43LDIuNi0yLjdzMi42LDEuMSwyLjYsMi43cy0xLjEsMi43LTIuNiwyLjdTMjkuNiw5LjYsMjkuNiw4eiBNMzMuNCw4DQoJCQljMC0wLjktMC41LTEuNC0xLjItMS40UzMxLDcuMSwzMSw4czAuNSwxLjQsMS4yLDEuNFMzMy40LDguOSwzMy40LDh6Ii8+DQoJPC9nPg0KCTxnIGNsYXNzPSJzdDAiPg0KCQk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNNDAuMiw5LjFjMCwwLjktMC42LDEuNS0xLjksMS41aC0yLjVWNS40aDIuNGMxLjIsMCwxLjksMC41LDEuOSwxLjNjMCwwLjUtMC4zLDAuOS0wLjcsMS4xDQoJCQlDNDAsOC4xLDQwLjIsOC41LDQwLjIsOS4xeiBNMzcuMSw3LjZoMWMwLjUsMCwwLjctMC4yLDAuNy0wLjZjMC0wLjQtMC4yLTAuNS0wLjctMC41aC0xVjcuNnogTTM5LDljMC0wLjQtMC4yLTAuNi0wLjctMC42aC0xLjINCgkJCXYxLjFoMS4xQzM4LjcsOS42LDM5LDkuNCwzOSw5eiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTQ1LjUsNy42djIuOWgtMS4zVjkuOWMtMC4zLDAuNS0wLjcsMC43LTEuNCwwLjdjLTEuMSwwLTEuOC0wLjctMS44LTEuNmMwLTAuOSwwLjYtMS41LDItMS41aDEuMQ0KCQkJYzAtMC42LTAuMy0xLTEuMS0xYy0wLjUsMC0xLDAuMi0xLjQsMC41bC0wLjUtMWMwLjUtMC40LDEuMy0wLjYsMi0wLjZDNDQuNyw1LjQsNDUuNSw2LjEsNDUuNSw3LjZ6IE00NC4xLDlWOC40aC0wLjkNCgkJCWMtMC42LDAtMC44LDAuMy0wLjgsMC42YzAsMC40LDAuMywwLjYsMC44LDAuNkM0My42LDkuNyw0NCw5LjQsNDQuMSw5eiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTUxLjksOGMwLDEuNi0xLDIuNy0yLjMsMi43Yy0wLjYsMC0xLjEtMC4yLTEuNC0wLjZ2Mi40aC0xLjR2LTdoMS4zVjZjMC4zLTAuNSwwLjgtMC43LDEuNS0wLjcNCgkJCUM1MC45LDUuNCw1MS45LDYuNCw1MS45LDh6IE01MC41LDhjMC0wLjktMC41LTEuNC0xLjItMS40UzQ4LjEsNy4xLDQ4LjEsOHMwLjUsMS40LDEuMiwxLjRTNTAuNSw4LjksNTAuNSw4eiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTU5LjcsOS4xYzAsMC45LTAuNiwxLjUtMS45LDEuNWgtMi41VjUuNGgyLjRjMS4yLDAsMS45LDAuNSwxLjksMS4zYzAsMC41LTAuMywwLjktMC43LDEuMQ0KCQkJQzU5LjQsOC4xLDU5LjcsOC41LDU5LjcsOS4xeiBNNTYuNiw3LjZoMWMwLjUsMCwwLjctMC4yLDAuNy0wLjZjMC0wLjQtMC4yLTAuNS0wLjctMC41aC0xVjcuNnogTTU4LjUsOWMwLTAuNC0wLjItMC42LTAuNy0wLjYNCgkJCWgtMS4ydjEuMWgxLjFDNTguMiw5LjYsNTguNSw5LjQsNTguNSw5eiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTY1LDcuNnYyLjloLTEuM1Y5LjljLTAuMywwLjUtMC43LDAuNy0xLjQsMC43Yy0xLjEsMC0xLjgtMC43LTEuOC0xLjZjMC0wLjksMC42LTEuNSwyLTEuNWgxLjENCgkJCWMwLTAuNi0wLjMtMS0xLjEtMWMtMC41LDAtMSwwLjItMS40LDAuNWwtMC41LTFjMC41LTAuNCwxLjMtMC42LDItMC42QzY0LjEsNS40LDY1LDYuMSw2NSw3LjZ6IE02My42LDlWOC40aC0wLjkNCgkJCWMtMC42LDAtMC44LDAuMy0wLjgsMC42YzAsMC40LDAuMywwLjYsMC44LDAuNkM2My4xLDkuNyw2My41LDkuNCw2My42LDl6Ii8+DQoJPC9nPg0KCTxnIGNsYXNzPSJzdDAiPg0KCQk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNNzAsNi43aC0yLjR2My45aC0xLjRWNS40SDcwVjYuN3oiLz4NCgk8L2c+DQoJPGcgY2xhc3M9InN0MCI+DQoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik03MC41LDhjMC0xLjYsMS4xLTIuNywyLjYtMi43czIuNiwxLjEsMi42LDIuN3MtMS4xLDIuNy0yLjYsMi43UzcwLjUsOS42LDcwLjUsOHogTTc0LjMsOA0KCQkJYzAtMC45LTAuNS0xLjQtMS4yLTEuNFM3MS45LDcuMSw3MS45LDhzMC41LDEuNCwxLjIsMS40Uzc0LjMsOC45LDc0LjMsOHoiLz4NCgk8L2c+DQoJPGcgY2xhc3M9InN0MCI+DQoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik04MS4xLDkuMWMwLDAuOS0wLjYsMS41LTEuOSwxLjVoLTIuNVY1LjRoMi40YzEuMiwwLDEuOSwwLjUsMS45LDEuM2MwLDAuNS0wLjMsMC45LTAuNywxLjENCgkJCUM4MC45LDguMSw4MS4xLDguNSw4MS4xLDkuMXogTTc4LDcuNmgxYzAuNSwwLDAuNy0wLjIsMC43LTAuNmMwLTAuNC0wLjItMC41LTAuNy0wLjVoLTFWNy42eiBNNzkuOSw5YzAtMC40LTAuMi0wLjYtMC43LTAuNkg3OA0KCQkJdjEuMWgxLjFDNzkuNiw5LjYsNzkuOSw5LjQsNzkuOSw5eiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTgyLjMsNS40aDEuNHYzLjFsMi4zLTMuMWgxLjJ2NS4yaC0xLjRWNy41bC0yLjMsMy4xaC0xLjNWNS40eiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTg4LjUsNS40aDEuNHYzLjFsMi4zLTMuMWgxLjJ2NS4ySDkyVjcuNWwtMi4zLDMuMWgtMS4zVjUuNHogTTg5LjMsMy40aDAuOWMwLDAuNCwwLjIsMC43LDAuNiwwLjcNCgkJCWMwLjQsMCwwLjctMC4zLDAuNy0wLjdoMC45YzAsMS0wLjUsMS41LTEuNiwxLjVTODkuMyw0LjQsODkuMywzLjR6Ii8+DQoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik05NC43LDcuM2gyLjV2MS4yaC0yLjVWNy4zeiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTEwMi44LDkuMWMwLDAuOS0wLjYsMS41LTEuOSwxLjVoLTIuNVY1LjRoMi40YzEuMiwwLDEuOSwwLjUsMS45LDEuM2MwLDAuNS0wLjMsMC45LTAuNywxLjENCgkJCUMxMDIuNSw4LjEsMTAyLjgsOC41LDEwMi44LDkuMXogTTk5LjYsNy42aDFjMC41LDAsMC43LTAuMiwwLjctMC42YzAtMC40LTAuMi0wLjUtMC43LTAuNWgtMVY3LjZ6IE0xMDEuNSw5DQoJCQljMC0wLjQtMC4yLTAuNi0wLjctMC42aC0xLjJ2MS4xaDEuMUMxMDEuMyw5LjYsMTAxLjUsOS40LDEwMS41LDl6Ii8+DQoJPC9nPg0KCTxnIGNsYXNzPSJzdDAiPg0KCQk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA4LjEsNy42djIuOWgtMS4zVjkuOWMtMC4zLDAuNS0wLjcsMC43LTEuNCwwLjdjLTEuMSwwLTEuOC0wLjctMS44LTEuNmMwLTAuOSwwLjYtMS41LDItMS41aDEuMQ0KCQkJYzAtMC42LTAuMy0xLTEuMS0xYy0wLjUsMC0xLDAuMi0xLjQsMC41bC0wLjUtMWMwLjUtMC40LDEuMy0wLjYsMi0wLjZDMTA3LjIsNS40LDEwOC4xLDYuMSwxMDguMSw3LjZ6IE0xMDYuNyw5VjguNGgtMC45DQoJCQljLTAuNiwwLTAuOCwwLjMtMC44LDAuNmMwLDAuNCwwLjMsMC42LDAuOCwwLjZDMTA2LjEsOS43LDEwNi41LDkuNCwxMDYuNyw5eiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTExNC41LDhjMCwxLjYtMSwyLjctMi4zLDIuN2MtMC42LDAtMS4xLTAuMi0xLjQtMC42djIuNGgtMS40di03aDEuM1Y2YzAuMy0wLjUsMC44LTAuNywxLjUtMC43DQoJCQlDMTEzLjQsNS40LDExNC41LDYuNCwxMTQuNSw4eiBNMTEzLjEsOGMwLTAuOS0wLjUtMS40LTEuMi0xLjRjLTAuNywwLTEuMiwwLjUtMS4yLDEuNHMwLjUsMS40LDEuMiwxLjQNCgkJCUMxMTIuNiw5LjQsMTEzLjEsOC45LDExMy4xLDh6Ii8+DQoJPC9nPg0KCTxnIGNsYXNzPSJzdDAiPg0KCQk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTE5LjUsNi43aC0xLjZ2My45aC0xLjRWNi43SDExNVY1LjRoNC41VjYuN3oiLz4NCgk8L2c+DQoJPGcgY2xhc3M9InN0MCI+DQoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xMjAuMiwzLjljMC0wLjUsMC4zLTAuOCwwLjgtMC44YzAuNSwwLDAuOCwwLjMsMC44LDAuOGMwLDAuNS0wLjMsMC45LTAuOCwwLjkNCgkJCUMxMjAuNSw0LjcsMTIwLjIsNC40LDEyMC4yLDMuOXogTTEyMC4zLDUuNGgxLjR2NS4yaC0xLjRWNS40eiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTEyMi43LDhjMC0xLjYsMS4xLTIuNywyLjYtMi43YzEsMCwxLjgsMC41LDIuMSwxLjNsLTEuMSwwLjZjLTAuMy0wLjUtMC42LTAuNy0xLjEtMC43DQoJCQljLTAuNywwLTEuMiwwLjUtMS4yLDEuNHMwLjUsMS40LDEuMiwxLjRjMC40LDAsMC44LTAuMiwxLjEtMC43bDEuMSwwLjZjLTAuMywwLjgtMS4xLDEuMy0yLjEsMS4zQzEyMy44LDEwLjcsMTIyLjcsOS42LDEyMi43LDh6Ig0KCQkJLz4NCgk8L2c+DQoJPGcgY2xhc3M9InN0MCI+DQoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xMzIuNSw2LjdoLTEuNnYzLjloLTEuNFY2LjdIMTI4VjUuNGg0LjVWNi43eiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTEzNy43LDguOGMwLDEuMS0wLjgsMS44LTIuMSwxLjhsLTIuNCwwVjUuNGgxLjR2MS42aDEuMkMxMzcuMSw3LjEsMTM3LjcsNy43LDEzNy43LDguOHogTTEzNi40LDguOA0KCQkJYzAtMC41LTAuMy0wLjctMC44LTAuN2wtMC45LDB2MS41aDAuOUMxMzYuMSw5LjUsMTM2LjQsOS4zLDEzNi40LDguOHoiLz4NCgk8L2c+DQoJPGcgY2xhc3M9InN0MCI+DQoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xNDUuNSw5LjFjMCwwLjktMC42LDEuNS0xLjksMS41aC0yLjVWNS40aDIuNGMxLjIsMCwxLjksMC41LDEuOSwxLjNjMCwwLjUtMC4zLDAuOS0wLjcsMS4xDQoJCQlDMTQ1LjIsOC4xLDE0NS41LDguNSwxNDUuNSw5LjF6IE0xNDIuMyw3LjZoMWMwLjUsMCwwLjctMC4yLDAuNy0wLjZjMC0wLjQtMC4yLTAuNS0wLjctMC41aC0xVjcuNnogTTE0NC4yLDkNCgkJCWMwLTAuNC0wLjItMC42LTAuNy0wLjZoLTEuMnYxLjFoMS4xQzE0My45LDkuNiwxNDQuMiw5LjQsMTQ0LjIsOXoiLz4NCgk8L2c+DQoJPGcgY2xhc3M9InN0MCI+DQoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xNDguNyw4LjZoLTAuN3YyaC0xLjRWNS40aDEuNHYyaDAuN2wxLjMtMmgxLjRsLTEuNiwyLjVsMS44LDIuN2gtMS42TDE0OC43LDguNnoiLz4NCgk8L2c+DQoJPGcgY2xhc3M9InN0MCI+DQoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xNTYuMyw3LjZ2Mi45SDE1NVY5LjljLTAuMywwLjUtMC43LDAuNy0xLjQsMC43Yy0xLjEsMC0xLjgtMC43LTEuOC0xLjZjMC0wLjksMC42LTEuNSwyLTEuNWgxLjENCgkJCWMwLTAuNi0wLjMtMS0xLjEtMWMtMC41LDAtMSwwLjItMS4zLDAuNUwxNTIsNmMwLjUtMC40LDEuMy0wLjYsMi0wLjZDMTU1LjUsNS40LDE1Ni4zLDYuMSwxNTYuMyw3LjZ6IE0xNTQuOSw5VjguNEgxNTQNCgkJCWMtMC42LDAtMC44LDAuMy0wLjgsMC42YzAsMC40LDAuMywwLjYsMC44LDAuNkMxNTQuNCw5LjcsMTU0LjgsOS40LDE1NC45LDl6Ii8+DQoJPC9nPg0KCTxnIGNsYXNzPSJzdDAiPg0KCQk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTYxLjUsOS4xYzAsMS0xLDEuNi0yLjMsMS42Yy0wLjcsMC0xLjUtMC4yLTIuMS0wLjVsMC40LTFjMC41LDAuMywxLjEsMC40LDEuNiwwLjRjMC42LDAsMS0wLjIsMS0wLjYNCgkJCWMwLTAuMy0wLjMtMC41LTAuNy0wLjVoLTFWNy41aDAuOGMwLjUsMCwwLjctMC4yLDAuNy0wLjVjMC0wLjMtMC4zLTAuNS0wLjktMC41Yy0wLjUsMC0xLDAuMS0xLjUsMC40bC0wLjMtMQ0KCQkJYzAuNi0wLjMsMS4zLTAuNSwxLjktMC41YzEuMywwLDIuMiwwLjUsMi4yLDEuNGMwLDAuNS0wLjMsMC45LTAuNywxLjFDMTYxLjIsOC4xLDE2MS41LDguNSwxNjEuNSw5LjF6Ii8+DQoJPC9nPg0KCTxnIGNsYXNzPSJzdDAiPg0KCQk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTY2LjcsNy42djIuOWgtMS4zVjkuOWMtMC4zLDAuNS0wLjcsMC43LTEuNCwwLjdjLTEuMSwwLTEuOC0wLjctMS44LTEuNmMwLTAuOSwwLjYtMS41LDItMS41aDEuMQ0KCQkJYzAtMC42LTAuMy0xLTEuMS0xYy0wLjUsMC0xLDAuMi0xLjMsMC41bC0wLjUtMWMwLjUtMC40LDEuMy0wLjYsMi0wLjZDMTY1LjksNS40LDE2Ni43LDYuMSwxNjYuNyw3LjZ6IE0xNjUuNCw5VjguNGgtMC45DQoJCQljLTAuNiwwLTAuOCwwLjMtMC44LDAuNmMwLDAuNCwwLjMsMC42LDAuOCwwLjZDMTY0LjgsOS43LDE2NS4yLDkuNCwxNjUuNCw5eiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTE2OCw1LjRoMS40djJoMnYtMmgxLjR2NS4yaC0xLjRWOC43aC0ydjEuOUgxNjhWNS40eiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTE3OC4zLDcuNnYyLjlIMTc3VjkuOWMtMC4zLDAuNS0wLjcsMC43LTEuNCwwLjdjLTEuMSwwLTEuOC0wLjctMS44LTEuNmMwLTAuOSwwLjYtMS41LDItMS41aDEuMQ0KCQkJYzAtMC42LTAuMy0xLTEuMS0xYy0wLjUsMC0xLDAuMi0xLjMsMC41TDE3NCw2YzAuNS0wLjQsMS4zLTAuNiwyLTAuNkMxNzcuNCw1LjQsMTc4LjMsNi4xLDE3OC4zLDcuNnogTTE3Ni45LDlWOC40SDE3Ng0KCQkJYy0wLjYsMC0wLjgsMC4zLTAuOCwwLjZjMCwwLjQsMC4zLDAuNiwwLjgsMC42QzE3Ni40LDkuNywxNzYuOCw5LjQsMTc2LjksOXoiLz4NCgk8L2c+DQoJPGcgY2xhc3M9InN0MCI+DQoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xODUuOSw5LjFjMCwxLTEsMS42LTIuMywxLjZjLTAuNywwLTEuNS0wLjItMi4xLTAuNWwwLjQtMWMwLjUsMC4zLDEuMSwwLjQsMS42LDAuNGMwLjYsMCwxLTAuMiwxLTAuNg0KCQkJYzAtMC4zLTAuMy0wLjUtMC43LTAuNWgtMVY3LjVoMC44YzAuNSwwLDAuNy0wLjIsMC43LTAuNWMwLTAuMy0wLjMtMC41LTAuOS0wLjVjLTAuNSwwLTEsMC4xLTEuNSwwLjRsLTAuMy0xDQoJCQljMC42LTAuMywxLjMtMC41LDEuOS0wLjVjMS4zLDAsMi4yLDAuNSwyLjIsMS40YzAsMC41LTAuMywwLjktMC43LDEuMUMxODUuNSw4LjEsMTg1LjksOC41LDE4NS45LDkuMXoiLz4NCgk8L2c+DQoJPGcgY2xhc3M9InN0MCI+DQoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xOTEuMSw3LjZ2Mi45aC0xLjNWOS45Yy0wLjMsMC41LTAuNywwLjctMS40LDAuN2MtMS4xLDAtMS44LTAuNy0xLjgtMS42YzAtMC45LDAuNi0xLjUsMi0xLjVoMS4xDQoJCQljMC0wLjYtMC4zLTEtMS4xLTFjLTAuNSwwLTEsMC4yLTEuMywwLjVsLTAuNS0xYzAuNS0wLjQsMS4zLTAuNiwyLTAuNkMxOTAuMiw1LjQsMTkxLjEsNi4xLDE5MS4xLDcuNnogTTE4OS43LDlWOC40aC0wLjkNCgkJCWMtMC42LDAtMC44LDAuMy0wLjgsMC42YzAsMC40LDAuMywwLjYsMC44LDAuNkMxODkuMSw5LjcsMTg5LjUsOS40LDE4OS43LDl6Ii8+DQoJPC9nPg0KCTxnIGNsYXNzPSJzdDAiPg0KCQk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTk2LjcsMy45djYuN2gtMS40VjUuMWgtMS4yVjMuOUgxOTYuN3oiLz4NCgk8L2c+DQoJPGcgY2xhc3M9InN0MCI+DQoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xOTgsNy4yYzAtMi4yLDEuMS0zLjUsMi42LTMuNWMxLjUsMCwyLjYsMS4zLDIuNiwzLjVjMCwyLjItMS4xLDMuNS0yLjYsMy41QzE5OS4xLDEwLjcsMTk4LDkuNSwxOTgsNy4yeg0KCQkJIE0yMDEuOCw3LjJjMC0xLjUtMC41LTIuMi0xLjItMi4yYy0wLjcsMC0xLjIsMC42LTEuMiwyLjJjMCwxLjUsMC41LDIuMiwxLjIsMi4yQzIwMS4zLDkuNCwyMDEuOCw4LjgsMjAxLjgsNy4yeiIvPg0KCTwvZz4NCgk8ZyBjbGFzcz0ic3QwIj4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTIwNC4xLDcuMmMwLTIuMiwxLjEtMy41LDIuNi0zLjVjMS41LDAsMi42LDEuMywyLjYsMy41YzAsMi4yLTEuMSwzLjUtMi42LDMuNQ0KCQkJQzIwNS4yLDEwLjcsMjA0LjEsOS41LDIwNC4xLDcuMnogTTIwNy45LDcuMmMwLTEuNS0wLjUtMi4yLTEuMi0yLjJjLTAuNywwLTEuMiwwLjYtMS4yLDIuMmMwLDEuNSwwLjUsMi4yLDEuMiwyLjINCgkJCUMyMDcuNCw5LjQsMjA3LjksOC44LDIwNy45LDcuMnoiLz4NCgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTIxNi42LDYuN2gtMi40djMuOWgtMS40VjUuNGgzLjhWNi43eiIvPg0KCTwvZz4NCjwvZz4NCjwvc3ZnPg0K');
+        }
+
+        [price-tag="277"] *[resource="3710043a-1378-4145-87e3-8a02d07c3a82"] {
+            content: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MC44NyA0OC4xOSI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiNmZmY7fTwvc3R5bGU+PC9kZWZzPjxnIGlkPSJUZXh0Ij48cGF0aCBkPSJNNjQuODgsNDguMTlINmE2LDYsMCwwLDEtNi02VjZBNiw2LDAsMCwxLDYsMEg2NC44OGE2LDYsMCwwLDEsNiw2VjQyLjIzQTYsNiwwLDAsMSw2NC44OCw0OC4xOVpNNiwuNzVBNS4yMyw1LjIzLDAsMCwwLC43NSw2VjQyLjIzQTUuMjMsNS4yMywwLDAsMCw2LDQ3LjQ0SDY0Ljg4YTUuMjIsNS4yMiwwLDAsMCw1LjIzLTUuMjFWNkE1LjIyLDUuMjIsMCwwLDAsNjQuODguNzVaIi8+PHBhdGggZD0iTTcwLjc1LDIxLjcySC4xMlY2LjE5YzAtMS41Ni43MS0yLjgzLDEuMjgtMi44M0g2OS40NWMuNzksMCwxLjMsMS4xNSwxLjMsMS45M1oiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik01Ljc3LDUuOTJ2NS4xNkg4LjE5VjUuOTJIOS4zdjUuMTlsLjU4LDAtLjA3LDIuMzZIOUw4Ljg5LDEySDQuNjZWNS45MloiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMS44Nyw2LjM4YS42Mi42MiwwLDEsMS0uNjItLjZBLjU4LjU4LDAsMCwxLDExLjg3LDYuMzhaTTEwLjY5LDEyVjcuNmgxLjEyVjEyWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE0LjA5LDcuNlY5LjI4aDEuN1Y3LjZoMS4xVjEyaC0xLjFWMTAuMTRoLTEuN1YxMkgxM1Y3LjZaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjAuNTQsMTJsLS4wNy0uNDloMGExLjY0LDEuNjQsMCwwLDEtMS4zLjU5LDEuMywxLjMsMCwwLDEtMS4zNy0xLjMxYzAtMS4xLDEtMS42NiwyLjYtMS42NVY5LjA1YzAtLjI4LS4xMi0uNzYtLjg5LS43NmEyLjI3LDIuMjcsMCwwLDAtMS4xOC4zMmwtLjIyLS43MmEzLjE2LDMuMTYsMCwwLDEsMS41OS0uMzgsMS42NCwxLjY0LDAsMCwxLDEuODEsMS44NHYxLjU5QTYuNDYsNi40NiwwLDAsMCwyMS41NCwxMlpNMjAuNCw5Ljg1Yy0uNzksMC0xLjU0LjE1LTEuNTQuODJhLjU4LjU4LDAsMCwwLC42My42My45LjksMCwwLDAsLjg3LS42MS43MS43MSwwLDAsMCwwLS4yNFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yOC4zNyw3LjZWMTJIMjcuMjVWOC40NkgyNS42MVYxMkgyNC41VjcuNloiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yOS41NSw5LjA2YzAtLjU3LDAtMSwwLTEuNDZoMWwuMDYuNjhoMGExLjY4LDEuNjgsMCwwLDEsMS41LS43N0EyLDIsMCwwLDEsMzMuOSw5Ljc0YTIuMDgsMi4wOCwwLDAsMS0yLDIuMzUsMS40NiwxLjQ2LDAsMCwxLTEuMjQtLjU5aDB2Mi4yN2gtMS4xWm0xLjEsMS4wOWExLjA2LDEuMDYsMCwwLDAsMCwuMzEsMSwxLDAsMCwwLDEsLjc3Yy43MSwwLDEuMTItLjU4LDEuMTItMS40NXMtLjM4LTEuNC0xLjA5LTEuNGExLDEsMCwwLDAtMSwuODIuOTIuOTIsMCwwLDAtLjA1LjI4WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM1Ljg2LDcuNlY5LjE4YzAsLjY5LDAsMS4xNi0uMDcsMS43N2gwYy4yMy0uNTEuMzctLjgzLjU5LTEuMjlMMzcuNDksNy42aDEuMzVWMTJIMzcuNzhWMTAuNDJjMC0uNywwLTEsLjA3LTEuODVoMGMtLjIyLjUyLS4zNi44My0uNTgsMS4yNi0uMzQuNjUtLjc0LDEuNDQtMS4xMSwyLjE2SDM0LjhWNy42WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ2LDkuNzZhMi4xNywyLjE3LDAsMCwxLTIuMjUsMi4zM0EyLjEyLDIuMTIsMCwwLDEsNDEuNiw5LjgzYTIuMTYsMi4xNiwwLDAsMSwyLjI3LTIuMzJBMi4xLDIuMSwwLDAsMSw0Niw5Ljc2Wm0tMy4zLDBjMCwuODUuNDIsMS40OSwxLjA5LDEuNDlzMS4wNy0uNjIsMS4wNy0xLjUxYzAtLjY4LS4zLTEuNDYtMS4wNi0xLjQ2UzQyLjc0LDkuMDcsNDIuNzQsOS44WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTUwLjgyLDcuNlYxMkg0OS43VjguNDZINDguMDVWMTJINDYuOTRWNy42WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTU1LjYsNy42VjEySDU0LjQ5VjguNDZINTMuM3YuOTVjMCwxLjE1LS4xMywxLjkyLS42NSwyLjMxYTEuNDcsMS40NywwLDAsMS0xLjEuMzZsLS4xMi0uODdBLjg1Ljg1LDAsMCwwLDUxLjksMTFjLjMzLS4yNy4zNi0uNzguMzYtMS42MlY3LjZaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTkuMjQsMTJsLS4wNy0uNDloMGExLjY0LDEuNjQsMCwwLDEtMS4zLjU5LDEuMywxLjMsMCwwLDEtMS4zNy0xLjMxYzAtMS4xLDEtMS42NiwyLjYtMS42NVY5LjA1YzAtLjI4LS4xMi0uNzYtLjg5LS43NkEyLjI3LDIuMjcsMCwwLDAsNTcsOC42MWwtLjIyLS43MmEzLjE0LDMuMTQsMCwwLDEsMS41OS0uMzgsMS42MywxLjYzLDAsMCwxLDEuOCwxLjg0djEuNTlBNi4zNSw2LjM1LDAsMCwwLDYwLjI0LDEyWm0tLjE1LTIuMTRjLS43OCwwLTEuNTMuMTUtMS41My44MmEuNTguNTgsMCwwLDAsLjYzLjYzLjkuOSwwLDAsMCwuODctLjYxLjY5LjY5LDAsMCwwLDAtLjI0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTY0LjUsNy42di44Nkg2My4xOFYxMkg2Mi4wN1Y4LjQ2SDYwLjc2VjcuNloiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik02Ni4zMSw2LjM4YS42Mi42MiwwLDEsMS0uNjItLjZBLjU4LjU4LDAsMCwxLDY2LjMxLDYuMzhaTTY1LjEzLDEyVjcuNmgxLjEyVjEyWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTExLjM3LDE2LjF2MS44MmguMTZsMS4zNS0xLjgySDE0LjJMMTIuNDUsMThjLjYxLjA5LDEsLjU3LDEuMjcsMS4yNy4xNC4zMi4zLjgxLjUsMS4xOUgxMy4wNmE3LDcsMCwwLDEtLjQtLjk0LDEuMTUsMS4xNSwwLDAsMC0xLjE0LS44OGgtLjE1djEuODJoLTEuMVYxNi4xWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE3LjM4LDIwLjQ5LDE3LjMxLDIwaDBhMS42NCwxLjY0LDAsMCwxLTEuMy41OSwxLjMxLDEuMzEsMCwwLDEtMS4zOC0xLjMxYzAtMS4xLDEtMS42NiwyLjYtMS42NXYtLjA4YzAtLjI4LS4xMS0uNzYtLjg5LS43NmEyLjMzLDIuMzMsMCwwLDAtMS4xOC4zMmwtLjIxLS43MkEzLjEyLDMuMTIsMCwwLDEsMTYuNTEsMTZhMS42NCwxLjY0LDAsMCwxLDEuODEsMS44NHYxLjU5YTcuODMsNy44MywwLDAsMCwuMDYsMVptLS4xNC0yLjE0Yy0uNzgsMC0xLjUzLjE1LTEuNTMuODJhLjU4LjU4LDAsMCwwLC42My42My44OC44OCwwLDAsMCwuODYtLjYxLjcxLjcxLDAsMCwwLDAtLjI0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE5LjQ5LDE3LjU2YzAtLjU3LDAtMSwwLTEuNDZoMWwuMDUuNjhoMEExLjY5LDEuNjksMCwwLDEsMjIsMTZhMiwyLDAsMCwxLDEuODUsMi4yMywyLjA5LDIuMDksMCwwLDEtMiwyLjM1QTEuNDMsMS40MywwLDAsMSwyMC42MiwyMGgwdjIuMjdIMTkuNDlabTEuMTEsMS4wOWExLjU1LDEuNTUsMCwwLDAsMCwuMzEsMSwxLDAsMCwwLDEsLjc3Yy43LDAsMS4xMS0uNTgsMS4xMS0xLjQ1cy0uMzgtMS40LTEuMDktMS40YTEsMSwwLDAsMC0xLC44MiwxLjM1LDEuMzUsMCwwLDAsMCwuMjhaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjcuOSwxNi4xVjE3SDI2LjU4djMuNTNoLTEuMVYxN0gyNC4xNlYxNi4xWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI5LjY0LDE2LjF2MS44MmguMTZsMS4zNS0xLjgyaDEuMzJMMzAuNzIsMThjLjYxLjA5LDEsLjU3LDEuMjcsMS4yNy4xNC4zMi4zLjgxLjUsMS4xOUgzMS4zM2E3LDcsMCwwLDEtLjQtLjk0LDEuMTUsMS4xNSwwLDAsMC0xLjE0LS44OGgtLjE1djEuODJIMjguNTNWMTYuMVoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zNy4yLDE4LjI2QTIuMTcsMi4xNywwLDAsMSwzNSwyMC41OWEyLjEyLDIuMTIsMCwwLDEtMi4xOS0yLjI2QTIuMTYsMi4xNiwwLDAsMSwzNSwxNiwyLjEsMi4xLDAsMCwxLDM3LjIsMTguMjZabS0zLjMsMGMwLC44NS40MSwxLjQ5LDEuMDksMS40OXMxLjA3LS42MiwxLjA3LTEuNTFjMC0uNjgtLjMxLTEuNDYtMS4wNi0xLjQ2UzMzLjksMTcuNTcsMzMuOSwxOC4zWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM5LjIsMTYuMXYxLjczaC42NWEyLDIsMCwwLDEsMi0xLjgyLDIsMiwwLDAsMSwyLDIuMjUsMi4xLDIuMSwwLDAsMS0yLjA2LDIuMzMsMiwyLDAsMCwxLTItMS45NEgzOS4ydjEuODRIMzguMVYxNi4xWm0zLjU3LDIuMThjMC0uNzQtLjI5LTEuNDYtLjkzLTEuNDZzLTEsLjcyLTEsMS40OS4zMSwxLjQ4Ljk0LDEuNDhTNDIuNzcsMTkuMDcsNDIuNzcsMTguMjhaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNDcuOSwxOC43N2wtLjUyLDEuNzJINDYuMjRsMS45NC02LjA3SDQ5LjZsMiw2LjA3SDUwLjM4bC0uNTUtMS43MlptMS43NC0uODQtLjQ4LTEuNDljLS4xMS0uMzctLjIxLS43OS0uMy0xLjE0aDBjLS4wOS4zNS0uMTguNzgtLjI5LDEuMTRsLS40NywxLjQ5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTUzLjA3LDE1LjM1SDUxLjM0di0uOTNoNC41OHYuOTNINTQuMTh2NS4xNEg1My4wN1oiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik02MC4zOCwxNC40MnYuOTFINTcuNzN2MS4zMWE2LDYsMCwwLDEsLjc1LS4wNSwyLjg0LDIuODQsMCwwLDEsMS42NC40NiwxLjY4LDEuNjgsMCwwLDEsLjczLDEuNDcsMS43NywxLjc3LDAsMCwxLS41NCwxLjM0LDMuNDksMy40OSwwLDAsMS0yLjMyLjY5LDEwLDEwLDAsMCwxLTEuMzYtLjA4di02Wm0tMi42NSw1LjI1YTMuMzQsMy4zNCwwLDAsMCwuNTksMCwxLjUzLDEuNTMsMCwwLDAsMS4wNi0uMzgsMS4wNSwxLjA1LDAsMCwwLC4zMS0uNzkuOTMuOTMsMCwwLDAtLjQtLjgyLDEuNjUsMS42NSwwLDAsMC0xLS4yOWwtLjU1LDBaIi8+PC9nPjwvc3ZnPg==');
+        }
+
+        [price-tag="277"] *[resource="6d77f9bf-5d1b-4bed-92ee-0b4e63a8df30"] {
+            content: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNC4wMiAyNC4wOSI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOm5vbmU7fS5jbHMtMntmaWxsOiNmZmY7fTwvc3R5bGU+PC9kZWZzPjxnIGlkPSJUZXh0Ij48cGF0aCBkPSJNMjcuMjMsMjQuMDlINi43OWMtMy43MiwwLTYuNzktMi43LTYuNzktNlY2YzAtMy4zLDMuMDctNiw2Ljc5LTZIMjcuMjNDMzEsMCwzNCwyLjcxLDM0LDZWMThjMCwzLjM3LTMsNi4wNy02Ljc5LDYuMDciLz48cmVjdCBjbGFzcz0iY2xzLTEiIHdpZHRoPSIzNC4wMiIgaGVpZ2h0PSIyNC4wOSIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTYuNzksNy43aC42NWMuNzIsMCwxLjM3LS4yNiwxLjM3LS45MXMtLjY1LS44NS0xLjQzLS44NUg2Ljc5VjcuN20wLTIuOGguNTJjLjg1LDAsMS4zNy0uMzMsMS4zNy0uNzlTOC4yMywzLjQsNy41MSwzLjRINi43OVpNNS4xNiwyLjQ4YTE4LjA3LDE4LjA3LDAsMCwxLDIuMTUtLjEzLDQuNTEsNC41MSwwLDAsMSwyLjA5LjMzLDEuMzQsMS4zNCwwLDAsMSwuODUsMS4yNEExLjQyLDEuNDIsMCwwLDEsOS4wOCw1LjI5YTEuNjYsMS42NiwwLDAsMSwxLjQzLDEuNTcsMS43OSwxLjc5LDAsMCwxLS43MiwxLjM3LDUuNzQsNS43NCwwLDAsMS0yLjg3LjUyLDExLjc5LDExLjc5LDAsMCwxLTEuNzYtLjA3WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE0LjQzLDYuNTNjLS44NSwwLTEuNTcuMTktMS41Ny43MnMuMzMuNTIuNjUuNTJhLjg4Ljg4LDAsMCwwLC44NS0uNTIuMjQuMjQsMCwwLDAsLjA3LS4yVjYuNTNtLjE5LDIuMTUtLjEzLS40NWEyLjA2LDIuMDYsMCwwLDEtMS41LjU4QTEuNTUsMS41NSwwLDAsMSwxMS4zLDcuMzhjMC0xLjE4LDEuMjQtMS43NywzLjA2LTEuNzdWNS41NWMwLS4yLS4xMy0uNTktMS0uNTlBMy4xMywzLjEzLDAsMCwwLDEyLDUuMzVsLS4yNi0uOTFhNC4yNCw0LjI0LDAsMCwxLDItLjM5YzEuNywwLDIuMjkuODUsMi4yOSwyVjcuNTdhNS43NCw1Ljc0LDAsMCwwLC4wNiwxLjExWiIvPjxwb2x5bGluZSBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMjAuOTYgNC4xMSAyMC45NiA1LjIyIDE4Ljg3IDUuMjIgMTguODcgOC42OCAxNy4zIDguNjggMTcuMyA0LjExIDIwLjk2IDQuMTEiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yMy4yNCw0LjExVjUuNTVhMTQuMTcsMTQuMTcsMCwwLDEtLjEzLDEuODNoLjA3Yy4yNi0uNTIuMzktLjg1LjU5LTEuMzFsMS0yaDJWOC42OEgyNS4yVjcuMzFjMC0uNzIuMDctMSwuMTMtMmgtLjA2YTExLjgyLDExLjgyLDAsMCwxLS41MywxLjI0QzI0LjQyLDcuMTgsMjQsOCwyMy42Myw4LjY4SDIxLjY4VjQuMTFoMS41NiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTI3Ljk0LDhhLjg2Ljg2LDAsMCwxLDEtLjg1Ljg5Ljg5LDAsMCwxLDEsLjg1LDEsMSwwLDAsMS0yLDBtMC0zLjA3YS45LjksMCwwLDEsMS0uODUuOTQuOTQsMCwwLDEsMSwuODUsMSwxLDAsMCwxLTIsMFoiLz48L2c+PC9zdmc+');
+        }
+    </style>
+    <style>
+        [price-tag="333"] *[resource="7f606ffd-ff82-421c-8f57-ff4f0a062e16"] {
+            content: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MC44NyA0OC4xOSI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiNmZmY7fTwvc3R5bGU+PC9kZWZzPjxnIGlkPSJUZXh0Ij48cGF0aCBkPSJNNjQuODgsNDguMTlINmE2LDYsMCwwLDEtNi02VjZBNiw2LDAsMCwxLDYsMEg2NC44OGE2LDYsMCwwLDEsNiw2VjQyLjIzQTYsNiwwLDAsMSw2NC44OCw0OC4xOVpNNiwuNzVBNS4yMyw1LjIzLDAsMCwwLC43NSw2VjQyLjIzQTUuMjMsNS4yMywwLDAsMCw2LDQ3LjQ0SDY0Ljg4YTUuMjIsNS4yMiwwLDAsMCw1LjIzLTUuMjFWNkE1LjIyLDUuMjIsMCwwLDAsNjQuODguNzVaIi8+PHBhdGggZD0iTTcwLjc1LDIxLjcySC4xMlY2LjE5YzAtMS41Ni43MS0yLjgzLDEuMjgtMi44M0g2OS40NWMuNzksMCwxLjMsMS4xNSwxLjMsMS45M1oiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik01Ljc3LDUuOTJ2NS4xNkg4LjE5VjUuOTJIOS4zdjUuMTlsLjU4LDAtLjA3LDIuMzZIOUw4Ljg5LDEySDQuNjZWNS45MloiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMS44Nyw2LjM4YS42Mi42MiwwLDEsMS0uNjItLjZBLjU4LjU4LDAsMCwxLDExLjg3LDYuMzhaTTEwLjY5LDEyVjcuNmgxLjEyVjEyWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE0LjA5LDcuNlY5LjI4aDEuN1Y3LjZoMS4xVjEyaC0xLjFWMTAuMTRoLTEuN1YxMkgxM1Y3LjZaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjAuNTQsMTJsLS4wNy0uNDloMGExLjY0LDEuNjQsMCwwLDEtMS4zLjU5LDEuMywxLjMsMCwwLDEtMS4zNy0xLjMxYzAtMS4xLDEtMS42NiwyLjYtMS42NVY5LjA1YzAtLjI4LS4xMi0uNzYtLjg5LS43NmEyLjI3LDIuMjcsMCwwLDAtMS4xOC4zMmwtLjIyLS43MmEzLjE2LDMuMTYsMCwwLDEsMS41OS0uMzgsMS42NCwxLjY0LDAsMCwxLDEuODEsMS44NHYxLjU5QTYuNDYsNi40NiwwLDAsMCwyMS41NCwxMlpNMjAuNCw5Ljg1Yy0uNzksMC0xLjU0LjE1LTEuNTQuODJhLjU4LjU4LDAsMCwwLC42My42My45LjksMCwwLDAsLjg3LS42MS43MS43MSwwLDAsMCwwLS4yNFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yOC4zNyw3LjZWMTJIMjcuMjVWOC40NkgyNS42MVYxMkgyNC41VjcuNloiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yOS41NSw5LjA2YzAtLjU3LDAtMSwwLTEuNDZoMWwuMDYuNjhoMGExLjY4LDEuNjgsMCwwLDEsMS41LS43N0EyLDIsMCwwLDEsMzMuOSw5Ljc0YTIuMDgsMi4wOCwwLDAsMS0yLDIuMzUsMS40NiwxLjQ2LDAsMCwxLTEuMjQtLjU5aDB2Mi4yN2gtMS4xWm0xLjEsMS4wOWExLjA2LDEuMDYsMCwwLDAsMCwuMzEsMSwxLDAsMCwwLDEsLjc3Yy43MSwwLDEuMTItLjU4LDEuMTItMS40NXMtLjM4LTEuNC0xLjA5LTEuNGExLDEsMCwwLDAtMSwuODIuOTIuOTIsMCwwLDAtLjA1LjI4WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM1Ljg2LDcuNlY5LjE4YzAsLjY5LDAsMS4xNi0uMDcsMS43N2gwYy4yMy0uNTEuMzctLjgzLjU5LTEuMjlMMzcuNDksNy42aDEuMzVWMTJIMzcuNzhWMTAuNDJjMC0uNywwLTEsLjA3LTEuODVoMGMtLjIyLjUyLS4zNi44My0uNTgsMS4yNi0uMzQuNjUtLjc0LDEuNDQtMS4xMSwyLjE2SDM0LjhWNy42WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ2LDkuNzZhMi4xNywyLjE3LDAsMCwxLTIuMjUsMi4zM0EyLjEyLDIuMTIsMCwwLDEsNDEuNiw5LjgzYTIuMTYsMi4xNiwwLDAsMSwyLjI3LTIuMzJBMi4xLDIuMSwwLDAsMSw0Niw5Ljc2Wm0tMy4zLDBjMCwuODUuNDIsMS40OSwxLjA5LDEuNDlzMS4wNy0uNjIsMS4wNy0xLjUxYzAtLjY4LS4zLTEuNDYtMS4wNi0xLjQ2UzQyLjc0LDkuMDcsNDIuNzQsOS44WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTUwLjgyLDcuNlYxMkg0OS43VjguNDZINDguMDVWMTJINDYuOTRWNy42WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTU1LjYsNy42VjEySDU0LjQ5VjguNDZINTMuM3YuOTVjMCwxLjE1LS4xMywxLjkyLS42NSwyLjMxYTEuNDcsMS40NywwLDAsMS0xLjEuMzZsLS4xMi0uODdBLjg1Ljg1LDAsMCwwLDUxLjksMTFjLjMzLS4yNy4zNi0uNzguMzYtMS42MlY3LjZaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTkuMjQsMTJsLS4wNy0uNDloMGExLjY0LDEuNjQsMCwwLDEtMS4zLjU5LDEuMywxLjMsMCwwLDEtMS4zNy0xLjMxYzAtMS4xLDEtMS42NiwyLjYtMS42NVY5LjA1YzAtLjI4LS4xMi0uNzYtLjg5LS43NkEyLjI3LDIuMjcsMCwwLDAsNTcsOC42MWwtLjIyLS43MmEzLjE0LDMuMTQsMCwwLDEsMS41OS0uMzgsMS42MywxLjYzLDAsMCwxLDEuOCwxLjg0djEuNTlBNi4zNSw2LjM1LDAsMCwwLDYwLjI0LDEyWm0tLjE1LTIuMTRjLS43OCwwLTEuNTMuMTUtMS41My44MmEuNTguNTgsMCwwLDAsLjYzLjYzLjkuOSwwLDAsMCwuODctLjYxLjY5LjY5LDAsMCwwLDAtLjI0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTY0LjUsNy42di44Nkg2My4xOFYxMkg2Mi4wN1Y4LjQ2SDYwLjc2VjcuNloiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik02Ni4zMSw2LjM4YS42Mi42MiwwLDEsMS0uNjItLjZBLjU4LjU4LDAsMCwxLDY2LjMxLDYuMzhaTTY1LjEzLDEyVjcuNmgxLjEyVjEyWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTExLjM3LDE2LjF2MS44MmguMTZsMS4zNS0xLjgySDE0LjJMMTIuNDUsMThjLjYxLjA5LDEsLjU3LDEuMjcsMS4yNy4xNC4zMi4zLjgxLjUsMS4xOUgxMy4wNmE3LDcsMCwwLDEtLjQtLjk0LDEuMTUsMS4xNSwwLDAsMC0xLjE0LS44OGgtLjE1djEuODJoLTEuMVYxNi4xWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE3LjM4LDIwLjQ5LDE3LjMxLDIwaDBhMS42NCwxLjY0LDAsMCwxLTEuMy41OSwxLjMxLDEuMzEsMCwwLDEtMS4zOC0xLjMxYzAtMS4xLDEtMS42NiwyLjYtMS42NXYtLjA4YzAtLjI4LS4xMS0uNzYtLjg5LS43NmEyLjMzLDIuMzMsMCwwLDAtMS4xOC4zMmwtLjIxLS43MkEzLjEyLDMuMTIsMCwwLDEsMTYuNTEsMTZhMS42NCwxLjY0LDAsMCwxLDEuODEsMS44NHYxLjU5YTcuODMsNy44MywwLDAsMCwuMDYsMVptLS4xNC0yLjE0Yy0uNzgsMC0xLjUzLjE1LTEuNTMuODJhLjU4LjU4LDAsMCwwLC42My42My44OC44OCwwLDAsMCwuODYtLjYxLjcxLjcxLDAsMCwwLDAtLjI0WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE5LjQ5LDE3LjU2YzAtLjU3LDAtMSwwLTEuNDZoMWwuMDUuNjhoMEExLjY5LDEuNjksMCwwLDEsMjIsMTZhMiwyLDAsMCwxLDEuODUsMi4yMywyLjA5LDIuMDksMCwwLDEtMiwyLjM1QTEuNDMsMS40MywwLDAsMSwyMC42MiwyMGgwdjIuMjdIMTkuNDlabTEuMTEsMS4wOWExLjU1LDEuNTUsMCwwLDAsMCwuMzEsMSwxLDAsMCwwLDEsLjc3Yy43LDAsMS4xMS0uNTgsMS4xMS0xLjQ1cy0uMzgtMS40LTEuMDktMS40YTEsMSwwLDAsMC0xLC44MiwxLjM1LDEuMzUsMCwwLDAsMCwuMjhaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjcuOSwxNi4xVjE3SDI2LjU4djMuNTNoLTEuMVYxN0gyNC4xNlYxNi4xWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI5LjY0LDE2LjF2MS44MmguMTZsMS4zNS0xLjgyaDEuMzJMMzAuNzIsMThjLjYxLjA5LDEsLjU3LDEuMjcsMS4yNy4xNC4zMi4zLjgxLjUsMS4xOUgzMS4zM2E3LDcsMCwwLDEtLjQtLjk0LDEuMTUsMS4xNSwwLDAsMC0xLjE0LS44OGgtLjE1djEuODJIMjguNTNWMTYuMVoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zNy4yLDE4LjI2QTIuMTcsMi4xNywwLDAsMSwzNSwyMC41OWEyLjEyLDIuMTIsMCwwLDEtMi4xOS0yLjI2QTIuMTYsMi4xNiwwLDAsMSwzNSwxNiwyLjEsMi4xLDAsMCwxLDM3LjIsMTguMjZabS0zLjMsMGMwLC44NS40MSwxLjQ5LDEuMDksMS40OXMxLjA3LS42MiwxLjA3LTEuNTFjMC0uNjgtLjMxLTEuNDYtMS4wNi0xLjQ2UzMzLjksMTcuNTcsMzMuOSwxOC4zWiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM5LjIsMTYuMXYxLjczaC42NWEyLDIsMCwwLDEsMi0xLjgyLDIsMiwwLDAsMSwyLDIuMjUsMi4xLDIuMSwwLDAsMS0yLjA2LDIuMzMsMiwyLDAsMCwxLTItMS45NEgzOS4ydjEuODRIMzguMVYxNi4xWm0zLjU3LDIuMThjMC0uNzQtLjI5LTEuNDYtLjkzLTEuNDZzLTEsLjcyLTEsMS40OS4zMSwxLjQ4Ljk0LDEuNDhTNDIuNzcsMTkuMDcsNDIuNzcsMTguMjhaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNDcuOSwxOC43N2wtLjUyLDEuNzJINDYuMjRsMS45NC02LjA3SDQ5LjZsMiw2LjA3SDUwLjM4bC0uNTUtMS43MlptMS43NC0uODQtLjQ4LTEuNDljLS4xMS0uMzctLjIxLS43OS0uMy0xLjE0aDBjLS4wOS4zNS0uMTguNzgtLjI5LDEuMTRsLS40NywxLjQ5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTUzLjA3LDE1LjM1SDUxLjM0di0uOTNoNC41OHYuOTNINTQuMTh2NS4xNEg1My4wN1oiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik02MC4zOCwxNC40MnYuOTFINTcuNzN2MS4zMWE2LDYsMCwwLDEsLjc1LS4wNSwyLjg0LDIuODQsMCwwLDEsMS42NC40NiwxLjY4LDEuNjgsMCwwLDEsLjczLDEuNDcsMS43NywxLjc3LDAsMCwxLS41NCwxLjM0LDMuNDksMy40OSwwLDAsMS0yLjMyLjY5LDEwLDEwLDAsMCwxLTEuMzYtLjA4di02Wm0tMi42NSw1LjI1YTMuMzQsMy4zNCwwLDAsMCwuNTksMCwxLjUzLDEuNTMsMCwwLDAsMS4wNi0uMzgsMS4wNSwxLjA1LDAsMCwwLC4zMS0uNzkuOTMuOTMsMCwwLDAtLjQtLjgyLDEuNjUsMS42NSwwLDAsMC0xLS4yOWwtLjU1LDBaIi8+PC9nPjwvc3ZnPg==');
+        }
+    </style>
+    <div style="page-break-before:always; " page="">
+        <div style="width: 80.0mm;height:39.0mm;" data-index="0" data-odd="" price-tag="333">
+            <div auto-font-size="9.5pt"
+                style="position: absolute; top: 4mm; left: 1mm; width: 51mm; height: 21mm; text-align: center; display: flex; justify-content: center; align-items: center; font-family: &quot;Myriad Pro&quot;; font-size: 10.8375pt; line-height: 1; overflow: hidden;">
+                <div style="width:100%;overflow: visible;">Винo 0,75&nbsp;л ігристе<br>ArtWinery Крим біле<br>витримане
+                    брют 10-13,5 %<br>oб ск/бут</div>
+            </div>
+            <div
+                style="position:absolute;top:1mm;;left:39mm;width:40mm;text-align:right;display:flex;flex-direction:column;justify-content:start;font-family: Myriad Pro;font-size:7pt;line-height:1;">
+                <div style="height:2.1mm;">
+                    <div style="width:100%;overflow: visible;">&nbsp;</div>
+                </div>
+                <div style="height:2.1mm;">
+                    <div style="width:100%;overflow: visible;">16.10.24</div>
+                </div>
+                <div style="height:2.1mm;display:flex;flex-direction:row;justify-content:end;">
+                    <div style="">
+                        <div style="width:100%;overflow: visible;">Код: 20043</div>
+                    </div>
+                    <div style="padding-left:1mm;">
+                        <div style="width:100%;overflow: visible;"></div>
+                    </div>
+                </div>
+            </div>
+            <div style="position:absolute;top:8mm;;left:54mm;width:25mm;height:18mm;"><img
+                    resource="7f606ffd-ff82-421c-8f57-ff4f0a062e16" style="position:absolute;">
+                <div style="position:relative;top:8mm;display:flex;flex-direction:row;justify-content:center;">
+                    <div
+                        style="text-align:right;font-family:Myriad Pro SemiCond;font-size:32pt;line-height:0.67;font-weight: 600;">
+                        <div style="width:100%;overflow: visible;">243</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;justify-content:start;">
+                        <div
+                            style="text-align:center;font-family:Myriad Pro;font-size:15pt;line-height:1;text-decoration: underline;font-weight: 600;">
+                            <div style="width:100%;overflow: visible;">10</div>
+                        </div>
+                        <div
+                            style="text-align:center;font-family:Myriad Pro;font-size:8pt;line-height:1;font-weight: 600;">
+                            <div style="width:100%;overflow: visible;">грн</div>
+                        </div>
+                    </div>
+                </div>
+            </div><canvas bwipjs-apply="" bwip-bcid="ean13" bwip-text="4820003350256" bwip-textmargin="0" bwip-scale="8"
+                bwip-includetext="true" bwip-margin="0" bwip-height="7.600" bwip-textsize="9.000" bwip-textfont=""
+                style="position:absolute;top:29mm;;left:51mm;width:28mm;height:8mm;font-size:9pt;" width="840"
+                height="205"></canvas>
+            <div
+                style="position:absolute;top:26mm;;left:0mm;width:51mm;height:12mm;display:flex;flex-direction:row;justify-content:center;">
+                <div style="position:relative;display:flex;flex-direction:row;justify-content:start;padding-left:4mm;">
+                    <div
+                        style="text-align:right;font-family:Myriad Pro SemiCond;font-size:46.00pt;line-height:0.67;font-weight: 600;">
+                        <div style="width:100%;overflow: visible;">286</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;justify-content:start;">
+                        <div
+                            style="text-align:center;font-family:Myriad Pro;font-size:21pt;line-height:1;text-decoration: underline;font-weight: 600;">
+                            <div style="width:100%;overflow: visible;">00</div>
+                        </div>
+                        <div
+                            style="text-align:center;font-family:Myriad Pro;font-size:6.5pt;line-height:1;font-weight: 600;">
+                            <div style="width:100%;overflow: visible;">грн /</div>
+                        </div>
+                        <div
+                            style="text-align:center;font-family:Myriad Pro;font-size:6.5pt;line-height:1;font-weight: 600;">
+                            <div style="width:100%;overflow: visible;">шт</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button printButton onclick="printAboveDivWithPage(this)">Друк</button>
+    <div style="page-break-before:always; " page="">
+        <div style="width: 80.0mm;height:39.0mm;" data-index="1" data-even="" price-tag="333">
+            <div auto-font-size="9.5pt"
+                style="position: absolute; top: 4mm; left: 1mm; width: 51mm; height: 21mm; text-align: center; display: flex; justify-content: center; align-items: center; font-family: &quot;Myriad Pro&quot;; font-size: 12.75pt; line-height: 1; overflow: hidden;">
+                <div style="width:100%;overflow: visible;">Вино 0,75 л Cotnar<br>Токай Мускат біле<br>напівсолодке 9-12
+                    % об<br>ск/бут Україна</div>
+            </div>
+            <div
+                style="position:absolute;top:1mm;;left:39mm;width:40mm;text-align:right;display:flex;flex-direction:column;justify-content:start;font-family: Myriad Pro;font-size:7pt;line-height:1;">
+                <div style="height:2.1mm;">
+                    <div style="width:100%;overflow: visible;">&nbsp;</div>
+                </div>
+                <div style="height:2.1mm;">
+                    <div style="width:100%;overflow: visible;">16.10.24</div>
+                </div>
+                <div style="height:2.1mm;display:flex;flex-direction:row;justify-content:end;">
+                    <div style="">
+                        <div style="width:100%;overflow: visible;">Код: 99469</div>
+                    </div>
+                    <div style="padding-left:1mm;">
+                        <div style="width:100%;overflow: visible;"></div>
+                    </div>
+                </div>
+            </div>
+            <div style="position:absolute;top:8mm;;left:54mm;width:25mm;height:18mm;"><img
+                    resource="7f606ffd-ff82-421c-8f57-ff4f0a062e16" style="position:absolute;">
+                <div style="position:relative;top:8mm;display:flex;flex-direction:row;justify-content:center;">
+                    <div
+                        style="text-align:right;font-family:Myriad Pro SemiCond;font-size:32pt;line-height:0.67;font-weight: 600;">
+                        <div style="width:100%;overflow: visible;">201</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;justify-content:start;">
+                        <div
+                            style="text-align:center;font-family:Myriad Pro;font-size:15pt;line-height:1;text-decoration: underline;font-weight: 600;">
+                            <div style="width:100%;overflow: visible;">96</div>
+                        </div>
+                        <div
+                            style="text-align:center;font-family:Myriad Pro;font-size:8pt;line-height:1;font-weight: 600;">
+                            <div style="width:100%;overflow: visible;">грн</div>
+                        </div>
+                    </div>
+                </div>
+            </div><canvas bwipjs-apply="" bwip-bcid="ean13" bwip-text="4820013071608" bwip-textmargin="0" bwip-scale="8"
+                bwip-includetext="true" bwip-margin="0" bwip-height="7.600" bwip-textsize="9.000" bwip-textfont=""
+                style="position:absolute;top:29mm;;left:51mm;width:28mm;height:8mm;font-size:9pt;" width="840"
+                height="205"></canvas>
+            <div
+                style="position:absolute;top:26mm;;left:0mm;width:51mm;height:12mm;display:flex;flex-direction:row;justify-content:center;">
+                <div style="position:relative;display:flex;flex-direction:row;justify-content:start;padding-left:4mm;">
+                    <div
+                        style="text-align:right;font-family:Myriad Pro SemiCond;font-size:46.00pt;line-height:0.67;font-weight: 600;">
+                        <div style="width:100%;overflow: visible;">237</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;justify-content:start;">
+                        <div
+                            style="text-align:center;font-family:Myriad Pro;font-size:21pt;line-height:1;text-decoration: underline;font-weight: 600;">
+                            <div style="width:100%;overflow: visible;">60</div>
+                        </div>
+                        <div
+                            style="text-align:center;font-family:Myriad Pro;font-size:6.5pt;line-height:1;font-weight: 600;">
+                            <div style="width:100%;overflow: visible;">грн /</div>
+                        </div>
+                        <div
+                            style="text-align:center;font-family:Myriad Pro;font-size:6.5pt;line-height:1;font-weight: 600;">
+                            <div style="width:100%;overflow: visible;">шт</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button printButton onclick="printAboveDivWithPage(this)">Друк</button>
+    <div style="page-break-before:always; " page="">
+        <div style="width: 80.0mm;height:39.0mm;" data-index="2" data-odd="" price-tag="277"><img
+                resource="f82ad730-82e8-4f2a-8543-4a3e4d4e9876"
+                style="position:absolute;top:0mm;;left:1mm;width:78mm;height:5mm;">
+            <div
+                style="position:absolute;top:7mm;;left:1mm;width:51mm;height:31mm;display:flex;flex-direction:column;justify-content:space-around;">
+                <div auto-font-size="9.5pt"
+                    style="top:7mm;width:52mm;height:20mm;text-align:center;display:flex;justify-content:center;align-items:center;font-family:Myriad Pro;font-size:15pt;line-height:1;overflow:hidden;">
+                    <div style="width:100%;overflow: visible;">Крило<br>курчат-бройлерів<br>Золотко газ/упак</div>
+                </div>
+                <div style="height:10.2mm;display:flex;flex-direction:row;justify-content:center;">
+                    <div
+                        style="text-align:center;font-family:Myriad Pro SemiCond;font-size:41pt;line-height:0.67;font-weight: 600;">
+                        <div style="width:100%;overflow: visible;">9</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;justify-content:start;">
+                        <div
+                            style="text-align:center;display:flex;justify-content:center;align-items:center;font-family:Myriad Pro;font-size:19pt;line-height:1;text-decoration: underline;font-weight: 600;">
+                            <div style="width:100%;overflow: visible;">40</div>
+                        </div>
+                        <div
+                            style="text-align:center;display:flex;justify-content:center;align-items:center;font-family:Myriad Pro;font-size:9pt;line-height:1;font-weight: 600;">
+                            <div style="width:100%;overflow: visible;">грн</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                style="position:absolute;top:5.5mm;;left:50mm;width:28mm;height:8mm;text-align:right;display:flex;flex-direction:column;justify-content:space-around;padding-right:1mm;">
+                <div style="width:28mm;height:2.5mm;font-family:Myriad Pro;font-size:7pt;">
+                    <div style="width:100%;overflow: visible;">Україна</div>
+                </div>
+                <div style="width:28mm;height:2.5mm;font-family:Myriad Pro;font-size:7pt;">
+                    <div style="width:100%;overflow: visible;">16.10.24</div>
+                </div>
+                <div style="width:28mm;height:2.5mm;display:flex;flex-direction:row;justify-content:end;">
+                    <div style="font-family:Myriad Pro;font-size:7pt;">
+                        <div style="width:100%;overflow: visible;">Код: 33370</div>
+                    </div>
+                    <div style="font-family:Myriad Pro;font-size:7pt;padding-left:1mm;">
+                        <div style="width:100%;overflow: visible;">1.5.1</div>
+                    </div>
+                </div>
+            </div><img resource="3710043a-1378-4145-87e3-8a02d07c3a82"
+                style="position:absolute;top:13mm;;left:53.5mm;width:25mm;height:18mm;">
+            <div
+                style="position:absolute;top:21mm;;left:54.5mm;width:23mm;display:flex;flex-direction:row;justify-content:center;">
+                <div
+                    style="text-align:right;font-family:Myriad Pro SemiCond;font-size:32.00pt;line-height:0.8;font-weight: 600;padding-top:0mm;">
+                    <div style="width:100%;overflow: visible;">7</div>
+                </div>
+                <div style="display:flex;flex-direction:column;justify-content:start;line-height:1;margin-top:0.8mm;">
+                    <div
+                        style="text-align:center;display:flex;justify-content:center;align-items:center;font-family:Myriad Pro;font-size:15pt;text-decoration: underline;font-weight: 600;">
+                        <div style="width:100%;overflow: visible;">99</div>
+                    </div>
+                    <div style="text-align:center;font-family:Myriad Pro;font-size:8pt;font-weight: 600;">
+                        <div style="width:100%;overflow: visible;">грн</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button printButton onclick="printAboveDivWithPage(this)">Друк</button>
+    <div style="page-break-before:always; " page="">
+        <div style="width: 80.0mm;height:39.0mm;" data-index="3" data-even="" price-tag="277"><img
+                resource="f82ad730-82e8-4f2a-8543-4a3e4d4e9876"
+                style="position:absolute;top:0mm;;left:1mm;width:78mm;height:5mm;">
+            <div
+                style="position:absolute;top:7mm;;left:1mm;width:51mm;height:31mm;display:flex;flex-direction:column;justify-content:space-around;">
+                <div auto-font-size="9.5pt"
+                    style="top: 7mm; width: 52mm; height: 20mm; text-align: center; display: flex; justify-content: center; align-items: center; font-family: &quot;Myriad Pro&quot;; font-size: 10.8375pt; line-height: 1; overflow: hidden;">
+                    <div style="width:100%;overflow: visible;">Четвертина задня<br>курчат-бройлерів<br>Розумний вибір
+                        охолоджена<br>п/етилен</div>
+                </div>
+                <div style="height:10.2mm;display:flex;flex-direction:row;justify-content:center;">
+                    <div
+                        style="text-align:center;font-family:Myriad Pro SemiCond;font-size:41pt;line-height:0.67;font-weight: 600;">
+                        <div style="width:100%;overflow: visible;">1</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;justify-content:start;">
+                        <div
+                            style="text-align:center;display:flex;justify-content:center;align-items:center;font-family:Myriad Pro;font-size:19pt;line-height:1;text-decoration: underline;font-weight: 600;">
+                            <div style="width:100%;overflow: visible;">00</div>
+                        </div>
+                        <div
+                            style="text-align:center;display:flex;justify-content:center;align-items:center;font-family:Myriad Pro;font-size:9pt;line-height:1;font-weight: 600;">
+                            <div style="width:100%;overflow: visible;">грн</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                style="position:absolute;top:5.5mm;;left:50mm;width:28mm;height:8mm;text-align:right;display:flex;flex-direction:column;justify-content:space-around;padding-right:1mm;">
+                <div style="width:28mm;height:2.5mm;font-family:Myriad Pro;font-size:7pt;">
+                    <div style="width:100%;overflow: visible;"></div>
+                </div>
+                <div style="width:28mm;height:2.5mm;font-family:Myriad Pro;font-size:7pt;">
+                    <div style="width:100%;overflow: visible;">16.10.24</div>
+                </div>
+                <div style="width:28mm;height:2.5mm;display:flex;flex-direction:row;justify-content:end;">
+                    <div style="font-family:Myriad Pro;font-size:7pt;">
+                        <div style="width:100%;overflow: visible;">Код: 39082</div>
+                    </div>
+                    <div style="font-family:Myriad Pro;font-size:7pt;padding-left:1mm;">
+                        <div style="width:100%;overflow: visible;">1.5.1</div>
+                    </div>
+                </div>
+            </div><img resource="3710043a-1378-4145-87e3-8a02d07c3a82"
+                style="position:absolute;top:13mm;;left:53.5mm;width:25mm;height:18mm;">
+            <div
+                style="position:absolute;top:21mm;;left:54.5mm;width:23mm;display:flex;flex-direction:row;justify-content:center;">
+                <div
+                    style="text-align:right;font-family:Myriad Pro SemiCond;font-size:32.00pt;line-height:0.8;font-weight: 600;padding-top:0mm;">
+                    <div style="width:100%;overflow: visible;">0</div>
+                </div>
+                <div style="display:flex;flex-direction:column;justify-content:start;line-height:1;margin-top:0.8mm;">
+                    <div
+                        style="text-align:center;display:flex;justify-content:center;align-items:center;font-family:Myriad Pro;font-size:15pt;text-decoration: underline;font-weight: 600;">
+                        <div style="width:100%;overflow: visible;">85</div>
+                    </div>
+                    <div style="text-align:center;font-family:Myriad Pro;font-size:8pt;font-weight: 600;">
+                        <div style="width:100%;overflow: visible;">грн</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button printButton onclick="printAboveDivWithPage(this)">Друк</button>
+    <script type="text/javascript" language="javascript">
+        window.executionManager.registerFunc((callback) => {
+            renderBarCodes(callback);
+        });
+    </script>
+    <script type="text/javascript" language="javascript">
+        window.executionManager.registerFunc((callback) => {
+            window.fontLoadManager.onFontsLoaded(() => fixFontSize(callback));
+        });
+    </script>
+    <script>
+        function printAboveDivWithPage(button) {
+  // Отримуємо попередній елемент від кнопки (який має бути div)
+  var divToPrint = button.previousElementSibling;
+
+  // Перевіряємо, чи це div і чи є в нього атрибут page
+  if (divToPrint && divToPrint.tagName === 'DIV' && divToPrint.hasAttribute('page')) {
+    // Клонуємо весь документ
+    var originalDoc = document.documentElement.cloneNode(true);
+
+    // Видаляємо всі елементи з атрибутом page окрім того, який друкується
+    var elementsWithPage = originalDoc.querySelectorAll('[page]');
+    elementsWithPage.forEach(function(element) {
+      if (element.outerHTML !== divToPrint.outerHTML) {
+        element.remove();
+      }
+    });
+
+    // Видаляємо всі кнопки з атрибутом printButton у копії документа
+    var elementsButton = originalDoc.querySelectorAll('[printButton]');
+    elementsButton.forEach(function(element) {
+      element.remove();
+    });
+
+    // Відкриваємо нове вікно для друку-
+    var newWindow = window.open();
+
+    // Вставляємо модифікований документ у нове вікно
+    newWindow.document.write('<!DOCTYPE html>');
+    newWindow.document.write(originalDoc.outerHTML);
+    newWindow.document.close();  // закриваємо документ
+    newWindow.focus();           // фокусуємо нове вікно
+
+    // Додаємо затримку, щоб коректно завантажити стилі перед друком
+    setTimeout(() => { newWindow.print(); newWindow.close()}, 50);
+  }
+}
+
+    </script>
+
+</body>
+
+</html>

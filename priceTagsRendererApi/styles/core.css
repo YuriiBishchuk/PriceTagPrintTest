@@ -1,0 +1,38 @@
+﻿/* ReSharper disable once Html.AttributeNotResolved */
+[price-tag] {
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+}
+
+
+/* ReSharper disable once Html.AttributeNotResolved */
+[page] {
+    display: flex;
+    flex-flow: column wrap;
+    break-inside: avoid;
+    overflow: hidden;
+    box-sizing: border-box;
+    align-content: flex-start
+}
+
+body * {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+@media print {
+    @page {
+        margin: 0;
+        padding: 0;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact !important;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        font-smooth: always;
+        color-adjust: exact !important;
+    }
+}
